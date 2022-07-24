@@ -19,7 +19,8 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    # await message.channel.send(message.content)
+    if message.content.startswith('fuku'):
+        await message.channel.send('teste')
 
 
 @client.event
