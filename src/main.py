@@ -3,13 +3,13 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 from RoleManager import RoleManager
-
+from globalValues import black_list, owners
 load_dotenv()
 bot = commands.Bot(command_prefix='!')  # discord.bot()
 token = os.getenv("TOKEN")
-# variaveis
-black_list = []
-owners = ['fukushiro#0449']
+
+
+# events
 
 
 @bot.event
