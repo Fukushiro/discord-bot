@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from RoleManager import RoleManager
 from CowSayManager import CowSayManager
+from MathManager import MathManager
 from globalValues import black_list, owners, users_to_delete_message
 from controller.cowsay_controller import get_ascii_image_for_discord
 load_dotenv()
@@ -62,6 +63,7 @@ async def on_message_edit(message_before, message_after):
 
 bot.add_cog(RoleManager(bot))
 bot.add_cog(CowSayManager(bot))
+bot.add_cog(MathManager(bot))
 
 # run bot
 bot.run(token)
