@@ -5,7 +5,7 @@ import os
 from RoleManager import RoleManager
 from CowSayManager import CowSayManager
 from MathManager import MathManager
-from globalValues import black_list, owners, users_to_delete_message
+from globalValues import black_list, owners, users_to_delete_message, recover_messages
 from controller.cowsay_controller import get_ascii_image_for_discord
 load_dotenv()
 bot = commands.Bot(command_prefix='!')  # discord.bot()
@@ -37,6 +37,14 @@ async def on_message(message):
 
 @bot.event
 async def on_message_delete(message):
+
+    print(recover_messages)
+    if str(message.author) in owners:
+        return
+    if not recover_messages:
+        await message.channel.send(get_ascii_image_for_discord('cow', "Recover desligado"))
+        return
+
     if str(message.author) in users_to_delete_message:
         return
     print("Apagada")
@@ -58,6 +66,7 @@ async def on_message_edit(message_before, message_after):
     print(message_before.content)
     send_message = f'Mensagem anterior : {message_before.content}, Nova mensagem : {message_after.content}, dono da mensagem: {message_after.author.name} '
     await message_before.channel.send(send_message)
+
 
 # cogs
 
