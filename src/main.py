@@ -3,7 +3,9 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 from RoleManager import RoleManager
+from CowSayManager import CowSayManager
 from globalValues import black_list, owners, users_to_delete_message
+from controller.cowsay_controller import get_ascii_image_for_discord
 load_dotenv()
 bot = commands.Bot(command_prefix='!')  # discord.bot()
 token = os.getenv("TOKEN")
@@ -47,7 +49,7 @@ async def on_message_delete(message):
         send_message = f'Cara que deleto: {deleter.name},  Dono da mensagem: {message.author.name}, Mensagem: {message.content}'
         if len(message.attachments) > 0:
             send_message += f', attach: {message.attachments[0].url}'
-        await message.channel.send(send_message)
+        await message.channel.send(get_ascii_image_for_discord('cow', send_message))
 
 
 @bot.event
@@ -55,21 +57,11 @@ async def on_message_edit(message_before, message_after):
     print(message_before.content)
     send_message = f'Mensagem anterior : {message_before.content}, Nova mensagem : {message_after.content}, dono da mensagem: {message_after.author.name} '
     await message_before.channel.send(send_message)
-#     embed=discord.Embed(title="{} edited a
-#     message".format(message_before.member.name),
-#     description="", color="Blue")
-#     embed.add_field(name= message_before.content ,value="This is the message before
-#     any edit",
-#     inline=True)
-#     embed.add_field(name= message_after.content ,value="This is the message after the
-#     edit",
-#     inline=True)
-#     channel=client.get_channel(channel_id)
-# await channel.send(channel, embed=embed)
 
 # cogs
 
 bot.add_cog(RoleManager(bot))
+bot.add_cog(CowSayManager(bot))
 
 # run bot
 bot.run(token)
