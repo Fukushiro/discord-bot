@@ -45,6 +45,23 @@ async def on_message_delete(message):
         await message.channel.send(send_message)
 
 
+@bot.event
+async def on_message_edit(message_before, message_after):
+    print(message_before.content)
+    send_message = f'Mensagem anterior : {message_before.content}, Nova mensagem : {message_after.content}, dono da mensagem: {message_after.author.name} '
+    await message_before.channel.send(send_message)
+#     embed=discord.Embed(title="{} edited a
+#     message".format(message_before.member.name),
+#     description="", color="Blue")
+#     embed.add_field(name= message_before.content ,value="This is the message before
+#     any edit",
+#     inline=True)
+#     embed.add_field(name= message_after.content ,value="This is the message after the
+#     edit",
+#     inline=True)
+#     channel=client.get_channel(channel_id)
+# await channel.send(channel, embed=embed)
+
 # cogs
 
 bot.add_cog(RoleManager(bot))
