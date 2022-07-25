@@ -3,7 +3,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 from RoleManager import RoleManager
-from globalValues import black_list, owners
+from globalValues import black_list, owners, users_to_delete_message
 load_dotenv()
 bot = commands.Bot(command_prefix='!')  # discord.bot()
 token = os.getenv("TOKEN")
@@ -20,6 +20,9 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     author = str(message.author)
+    if author in users_to_delete_message:
+        await message.delete()
+        return
     if message.author == bot.user:
         return
     if message.content.startswith('fuku'):
@@ -31,6 +34,8 @@ async def on_message(message):
 
 @bot.event
 async def on_message_delete(message):
+    if str(message.author) in users_to_delete_message:
+        return
     print("Apagada")
 
     deleter = None
