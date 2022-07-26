@@ -3,7 +3,7 @@ from http import client
 from xmlrpc.client import boolean
 import discord
 from discord.ext import commands
-from globalValues import owners, recover_messages, set_recover_manager
+from globalValues import Singleton, owners, recover_messages, set_recover_manager
 
 
 class RoleManager(commands.Cog):
@@ -18,11 +18,10 @@ class RoleManager(commands.Cog):
 
     @commands.command(name='set_recover')
     async def set_recover(self, ctx, newValue: boolean):
-        # global recover_messages
-        # print(newValue)
-        # print(recover_messages)
-        # recover_messages = bool(newValue)
-        set_recover_manager(bool(newValue))
+        if str(ctx.message.author) not in owners:
+            return
+        sing = Singleton()
+        sing.recover_message = newValue
         await ctx.send("Valor alterado")
 
     @commands.command(name='Admin')
