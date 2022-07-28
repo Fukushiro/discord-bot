@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import os
+from BlockManager import BlockManager
 from RoleManager import RoleManager
 from CowSayManager import CowSayManager
 from MathManager import MathManager
@@ -23,7 +24,8 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     author = str(message.author)
-    if author in users_to_delete_message:
+    sin = Singleton()
+    if author in sin.users_to_delete_message:
         await message.delete()
         return
     if message.author == bot.user:
@@ -37,7 +39,7 @@ async def on_message(message):
 
 @bot.event
 async def on_message_delete(message):
-
+    sin = Singleton()
     print(recover_messages)
     # if str(message.author) in owners:
     #     return
@@ -45,7 +47,7 @@ async def on_message_delete(message):
         await message.channel.send(get_ascii_image_for_discord('cow', "Recover desligado"))
         return
 
-    if str(message.author) in users_to_delete_message:
+    if str(message.author) in sin.users_to_delete_message:
         return
     print("Apagada")
 
@@ -73,6 +75,8 @@ async def on_message_edit(message_before, message_after):
 bot.add_cog(RoleManager(bot))
 bot.add_cog(CowSayManager(bot))
 bot.add_cog(MathManager(bot))
+bot.add_cog(BlockManager(bot))
+
 
 # run bot
 bot.run(token)

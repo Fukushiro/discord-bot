@@ -40,3 +40,9 @@ class SingletonMeta(type):
 
 class Singleton(metaclass=SingletonMeta):
     recover_message = True
+    users_to_delete_message = []
+
+
+class PermissionSingleton(metaclass=SingletonMeta):
+    all_can_block = False
+    all_can_unblock = False
