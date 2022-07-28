@@ -3,6 +3,7 @@ from discord.ext import commands
 import discord
 from globalValues import PermissionSingleton, Singleton, owners
 permissionSingleton = PermissionSingleton()
+sing = Singleton()
 
 
 class BlockManager(commands.Cog):
@@ -23,7 +24,6 @@ class BlockManager(commands.Cog):
         if str(member) == str(self.bot.user):
             return
 
-        sing = Singleton()
         sing.users_to_delete_message.append(str(member))
         print(sing.users_to_delete_message)
         await ctx.send('Usuario bloqueado -> ' + str(sing.users_to_delete_message))
@@ -33,7 +33,14 @@ class BlockManager(commands.Cog):
         # limita uso apenas por owners
         if str(ctx.message.author) not in owners and not permissionSingleton.all_can_unblock:
             return
-        sing = Singleton()
+
         if str(member) in sing.users_to_delete_message:
             sing.users_to_delete_message.remove(str(member))
             await ctx.send('Usuario desbloqueado')
+
+    @commands.command(name='unblockall')
+    async def unlockall(self, ctx):
+        if str(ctx.message.author) not in owners and not permissionSingleton.all_can_unblock:
+            return
+        sing.users_to_delete_message = []
+        await ctx.send('Todos desbloqueados')
