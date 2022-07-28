@@ -26,7 +26,7 @@ class BlockManager(commands.Cog):
         sing = Singleton()
         sing.users_to_delete_message.append(str(member))
         print(sing.users_to_delete_message)
-        await ctx.send('Usuario bloqueado')
+        await ctx.send('Usuario bloqueado -> ' + str(sing.users_to_delete_message))
 
     @commands.command(name='unblock')
     async def unblock_user(self, ctx, member: discord.Member):
