@@ -66,6 +66,8 @@ async def on_message_delete(message):
 
 @bot.event
 async def on_message_edit(message_before, message_after):
+    if message_before.content == message_after.content:
+        return
     print(message_before.content)
     send_message = f'Mensagem anterior : {message_before.content}, Nova mensagem : {message_after.content}, dono da mensagem: {message_after.author.name} '
     await message_before.channel.send(send_message)
