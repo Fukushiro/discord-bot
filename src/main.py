@@ -9,6 +9,7 @@ from CowSayManager import CowSayManager
 from MathManager import MathManager
 from globalValues import Singleton, black_list, owners, users_to_delete_message, recover_messages
 from controller.cowsay_controller import get_ascii_image_for_discord
+from utils.api import get_blocked_users
 load_dotenv()
 bot = commands.Bot(command_prefix='!')  # discord.bot()
 token = os.getenv("TOKEN")
@@ -19,6 +20,7 @@ singleton = Singleton()
 
 @bot.event
 async def on_ready():
+    print(get_blocked_users())
     print(f"Logged in as a bot {bot.user}")
 
 
