@@ -1,3 +1,4 @@
+from concurrent.futures import process
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -20,6 +21,7 @@ singleton = Singleton()
 
 @bot.event
 async def on_ready():
+    print(process.env.BASE_URL)
     print(get_blocked_users())
     print(f"Logged in as a bot {bot.user}")
 
