@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from BlockManager import BlockManager
 from PermissionManager import PermissionManager
+from PurgeManager import PuergeManager
 from RoleManager import RoleManager
 from CowSayManager import CowSayManager
 from MathManager import MathManager
@@ -84,6 +85,7 @@ bot.add_cog(CowSayManager(bot))
 bot.add_cog(MathManager(bot))
 bot.add_cog(BlockManager(bot))
 bot.add_cog(PermissionManager(bot))
+bot.add_cog(PuergeManager(bot))
 
 
 # run bot
