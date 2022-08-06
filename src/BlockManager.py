@@ -2,6 +2,7 @@ from ctypes import memset
 from discord.ext import commands
 import discord
 from globalValues import PermissionSingleton, Singleton, owners
+from utils.api import block_user, get_blocked_users
 permissionSingleton = PermissionSingleton()
 sing = Singleton()
 
@@ -23,10 +24,12 @@ class BlockManager(commands.Cog):
             return
         if str(member) == str(self.bot.user):
             return
-
-        sing.users_to_delete_message.append(str(member))
-        print(sing.users_to_delete_message)
-        await ctx.send('Usuario bloqueado -> ' + str(sing.users_to_delete_message))
+        funcionou = block_user(str(member), 1)
+        # sing.users_to_delete_message.append(str(member))
+        usuarios_bloqueados = get_blocked_users()
+        if not funcionou:
+            return await ctx.send('Erro')
+        await ctx.send('Usuario bloqueado ---->' + str(usuarios_bloqueados))
 
     @commands.command(name='unblock')
     async def unblock_user(self, ctx, member: discord.Member):
@@ -34,9 +37,15 @@ class BlockManager(commands.Cog):
         if str(ctx.message.author) not in owners and not permissionSingleton.all_can_unblock:
             return
 
-        if str(member) in sing.users_to_delete_message:
-            sing.users_to_delete_message.remove(str(member))
-            await ctx.send('Usuario desbloqueado')
+        # if str(member) in sing.users_to_delete_message:
+        #     sing.users_to_delete_message.remove(str(member))
+        #     await ctx.send('Usuario desbloqueado')
+        funcionou = block_user(str(member), 0)
+
+        if not funcionou:
+            return await ctx.send('Erro')
+
+        await ctx.send('Usuario desbloqueado')
 
     @commands.command(name='unblockall')
     async def unlockall(self, ctx):

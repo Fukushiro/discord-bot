@@ -27,8 +27,9 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     author = str(message.author)
+    users_to_delete = get_blocked_users()
     sin = Singleton()
-    if author in sin.users_to_delete_message:
+    if author in users_to_delete:
         await message.delete()
         return
     if message.author == bot.user:
@@ -42,7 +43,7 @@ async def on_message(message):
 
 @bot.event
 async def on_message_delete(message):
-    sin = Singleton()
+    users_to_delete = get_blocked_users()
     print(recover_messages)
     # if str(message.author) in owners:
     #     return
@@ -50,7 +51,7 @@ async def on_message_delete(message):
         await message.channel.send(get_ascii_image_for_discord('cow', "Recover desligado"))
         return
 
-    if str(message.author) in sin.users_to_delete_message:
+    if str(message.author) in users_to_delete:
         return
     print("Apagada")
 

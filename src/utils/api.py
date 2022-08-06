@@ -13,3 +13,21 @@ def get_blocked_users():
         return blocked_users
     except:
         return None
+
+
+def block_user(username, isBlocked):
+    try:
+        base_url = os.getenv("BASE_URL")
+        dataDic = {
+            "username": username,
+            "isBlocked": isBlocked
+        }
+        print(dataDic)
+        retorno = requests.put(f'{base_url}/block/block', json=dataDic)
+        print(retorno.json())
+        if retorno.status_code == 200:
+            return True
+        else:
+            return False
+    except:
+        return False
